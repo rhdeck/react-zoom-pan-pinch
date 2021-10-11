@@ -14,16 +14,16 @@ import {
 
 export type ReactZoomPanPinchContext = typeof TransformContext.prototype;
 
-export type ReactZoomPanPinchRef = {
-  instance: ReactZoomPanPinchContext;
-  state: ReactZoomPanPinchState;
-} & ReactZoomPanPinchHandlers;
-
 export type ReactZoomPanPinchState = {
   previousScale: number;
   scale: number;
   positionX: number;
   positionY: number;
+  setTransformState: (
+    scale: number,
+    positionX: number,
+    positionY: number,
+  ) => void;
 };
 
 export type ReactZoomPanPinchHandlers = {
@@ -37,7 +37,6 @@ export type ReactZoomPanPinchHandlers = {
 
 export type ReactZoomPanPinchProps = {
   children?: React.ReactNode | ((ref: ReactZoomPanPinchRef) => React.ReactNode);
-  ref?: React.Ref<ReactZoomPanPinchRef>;
   initialScale?: number;
   initialPositionX?: number;
   initialPositionY?: number;
@@ -101,38 +100,19 @@ export type ReactZoomPanPinchProps = {
     animationType?: keyof typeof animations;
     equalToMove?: boolean;
   };
-  onWheelStart?: (ref: ReactZoomPanPinchRef, event: WheelEvent) => void;
-  onWheel?: (ref: ReactZoomPanPinchRef, event: WheelEvent) => void;
-  onWheelStop?: (ref: ReactZoomPanPinchRef, event: WheelEvent) => void;
-  onPanningStart?: (
-    ref: ReactZoomPanPinchRef,
-    event: TouchEvent | MouseEvent,
-  ) => void;
-  onPanning?: (
-    ref: ReactZoomPanPinchRef,
-    event: TouchEvent | MouseEvent,
-  ) => void;
-  onPanningStop?: (
-    ref: ReactZoomPanPinchRef,
-    event: TouchEvent | MouseEvent,
-  ) => void;
-  onPinchingStart?: (ref: ReactZoomPanPinchRef, event: TouchEvent) => void;
-  onPinching?: (ref: ReactZoomPanPinchRef, event: TouchEvent) => void;
-  onPinchingStop?: (ref: ReactZoomPanPinchRef, event: TouchEvent) => void;
-  onZoomStart?: (
-    ref: ReactZoomPanPinchRef,
-    event: TouchEvent | MouseEvent,
-  ) => void;
-  onZoom?: (ref: ReactZoomPanPinchRef, event: TouchEvent | MouseEvent) => void;
-  onZoomStop?: (
-    ref: ReactZoomPanPinchRef,
-    event: TouchEvent | MouseEvent,
-  ) => void;
-  onInit?: (ref: ReactZoomPanPinchRef) => void;
-};
-
-export type ReactZoomPanPinchComponentHelpers = {
-  setComponents: (wrapper: HTMLDivElement, content: HTMLDivElement) => void;
+  onWheelStart?: (event: WheelEvent) => void;
+  onWheel?: (event: WheelEvent) => void;
+  onWheelStop?: (event: WheelEvent) => void;
+  onPanningStart?: (event: TouchEvent | MouseEvent) => void;
+  onPanning?: (event: TouchEvent | MouseEvent) => void;
+  onPanningStop?: (event: TouchEvent | MouseEvent) => void;
+  onPinchingStart?: (event: TouchEvent) => void;
+  onPinching?: (event: TouchEvent) => void;
+  onPinchingStop?: (event: TouchEvent) => void;
+  onZoomStart?: (event: TouchEvent | MouseEvent) => void;
+  onZoom?: (event: TouchEvent | MouseEvent) => void;
+  onZoomStop?: (event: TouchEvent | MouseEvent) => void;
+  onInit?: () => void;
 };
 
 export type LibrarySetup = Pick<

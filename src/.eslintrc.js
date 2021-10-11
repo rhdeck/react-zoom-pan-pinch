@@ -25,6 +25,7 @@ module.exports = {
       2,
       { extensions: [".js", ".jsx", ".ts", ".tsx"] },
     ],
+    "react/prop-types": "off",
   },
   settings: {
     "import/resolver": {

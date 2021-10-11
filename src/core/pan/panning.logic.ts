@@ -14,20 +14,7 @@ import {
   handleCalculateVelocity,
 } from "./velocity.logic";
 
-export function handlePanningStart(
-  contextInstance: ReactZoomPanPinchContext,
-  event: MouseEvent | TouchEvent,
-): void {
-  const { scale } = contextInstance.transformState;
 
-  handleCancelAnimation(contextInstance);
-  handleCalculateBounds(contextInstance, scale);
-  if ((event as TouchEvent).touches) {
-    handleTouchPanningSetup(contextInstance, event as TouchEvent);
-  } else {
-    handlePanningSetup(contextInstance, event as MouseEvent);
-  }
-}
 
 export function handlePanning(
   contextInstance: ReactZoomPanPinchContext,

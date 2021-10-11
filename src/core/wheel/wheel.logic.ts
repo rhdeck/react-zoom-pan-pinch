@@ -1,6 +1,5 @@
 import { ReactZoomPanPinchContext } from "../../models";
 import { handleCallback } from "../../utils/callback.utils";
-import { getContext } from "../../utils/context.utils";
 import { cancelTimeout } from "../../utils/helpers.utils";
 import { handleCancelAnimation } from "../animations/animations.utils";
 import { handleCalculateBounds } from "../bounds/bounds.utils";
@@ -24,7 +23,7 @@ export const handleWheelStart = (
 
   if (!contextInstance.wheelStopEventTimer) {
     handleCancelAnimation(contextInstance);
-    handleCallback(getContext(contextInstance), event, onWheelStart);
+    handleCallback(getContext(contextInstance), event, onhaWheelStart);
     handleCallback(getContext(contextInstance), event, onZoomStart);
   }
 };
@@ -42,7 +41,7 @@ export const handleWheelZoom = (
   const { step } = wheel;
 
   if (!contentComponent) {
-    throw new Error("Component not mounted");
+    // throw new Error("Component not mounted");
   }
 
   event.preventDefault();
@@ -61,22 +60,22 @@ export const handleWheelZoom = (
 
   const bounds = handleCalculateBounds(contextInstance, newScale);
 
-  const mousePosition = getMousePosition(event, contentComponent, scale);
+  // const mousePosition = getMousePosition(event, contentComponent, scale);
 
   const isPaddingDisabled = disabled || size === 0 || centerZoomedOut;
   const isLimitedToBounds = limitToBounds && isPaddingDisabled;
 
   const { x, y } = handleCalculateZoomPositions(
     contextInstance,
-    mousePosition.x,
-    mousePosition.y,
+    event.x,
+    event.y,
     newScale,
     bounds,
     isLimitedToBounds,
   );
 
   contextInstance.previousWheelEvent = event;
-
+  console.log("setting scale to newScale", newScale);
   contextInstance.setTransformState(newScale, x, y);
 
   handleCallback(getContext(contextInstance), event, onWheel);

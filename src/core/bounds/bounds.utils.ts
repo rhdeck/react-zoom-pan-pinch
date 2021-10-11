@@ -9,17 +9,23 @@ import { ComponentsSizesType } from "./bounds.types";
 
 export function getComponentsSizes(
   wrapperComponent: HTMLDivElement,
-  contentComponent: HTMLDivElement,
+  contentComponent?: HTMLDivElement,
   newScale: number,
 ): ComponentsSizesType {
   const wrapperWidth = wrapperComponent.offsetWidth;
   const wrapperHeight = wrapperComponent.offsetHeight;
+  let newContentWidth = 0;
+  let newContentHeight = 0;
+  if (contentComponent) {
+    const contentWidth = contentComponent.offsetWidth;
+    const contentHeight = contentComponent.offsetHeight;
 
-  const contentWidth = contentComponent.offsetWidth;
-  const contentHeight = contentComponent.offsetHeight;
-
-  const newContentWidth = contentWidth * newScale;
-  const newContentHeight = contentHeight * newScale;
+    newContentWidth = contentWidth * newScale;
+    newContentHeight = contentHeight * newScale;
+  } else {
+    newContentWidth = wrapperWidth;
+    newContentHeight = wrapperHeight;
+  }
   const newDiffWidth = wrapperWidth - newContentWidth;
   const newDiffHeight = wrapperHeight - newContentHeight;
 
@@ -66,7 +72,8 @@ export const calculateBounds = (
   const { wrapperComponent, contentComponent } = contextInstance;
   const { centerZoomedOut } = contextInstance.setup;
 
-  if (!wrapperComponent || !contentComponent) {
+  if (!wrapperComponent) {
+    //} || !contentComponent) {
     throw new Error("Components are not mounted");
   }
 
